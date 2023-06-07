@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import MovieGenre, TheMovie
 
 
@@ -71,3 +71,17 @@ def movie_single(request, movie_id):
         selected_movie_genres.append({"id": one_selected_genre.id, "whole_name": one_selected_genre.whole_name.title()})
     return render(request, 'movies/movie_single.html', {"selected_movie": selected_movie, "all_stars": all_stars,
                                                         "selected_movie_genres": selected_movie_genres})
+
+
+def add_comment(request, movie_id):
+    if request.method == 'POST':
+        selected_movie = TheMovie.objects.get(pk=movie_id)
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        website = request.POST.get('website')
+        message = request.POST.get('message')
+
+        # comment = Comment(name=name, email=email, website=website, message=message, movie=selected_movie)
+        # comment.save()
+
+    return redirect('movie_single', movie_id=movie_id)

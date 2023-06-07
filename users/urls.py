@@ -10,5 +10,6 @@ urlpatterns = [
     path('/user_favorite_grid', views.user_favorite_grid, name='user_favorite_grid'),
     path('/user_favorite_list', views.user_favorite_list, name='user_favorite_list'),
     path('/user_registration', views.user_registration, name='user_registration'),
+    path('/user_login', views.user_login, name='user_login'),
     path('/user_logout', views.user_logout, name='user_logout'),
 ]

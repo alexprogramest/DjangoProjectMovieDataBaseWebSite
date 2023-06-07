@@ -1,0 +1,48 @@
+
+<div class="hero user-hero">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hero-ct">
+					<h1>{% if current_user.first_name != "" and current_user.last_name != "" %}
+						{{ current_user.first_name }} {{ current_user.last_name }}
+						{% else %}
+						{{ current_user.nick_name }}
+						{% endif %}’s profile</h1>
+					<ul class="breadcumb">
+						<li class="active"><a href="{% url 'main_app:home' %}">Home</a></li>
+						<li> <span class="ion-ios-arrow-right"></span>
+                        {% if active_tab == 'profile' %}Profile{% endif %}
+                        {% if active_tab == 'favorite_movies' %}Favorite movies{% endif %}
+                        {% if active_tab == 'change_password' %}Change password{% endif %}
+                        </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="page-single userfav_list">
+	<div class="container">
+		<div class="row ipad-width2">
+			<div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="user-information">
+                    <div class="user-img">
+                        <a href="#"><img src="images/uploads/user-img.png" alt=""><br></a>
+                        <a href="#" class="redbtn">Change avatar</a>
+                    </div>
+                    <div class="user-fav">
+                        <p>Account Details</p>
+                        <ul>
+                            <li class="{% if active_tab == 'profile' %}active{% endif %}"><a href="{% url 'user_profile' %}">Profile</a></li>
+                            <li class="{% if active_tab == 'favorite_movies' %}active{% endif %}"><a href="{% url 'user_favorite_grid' %}">Favorite movies</a></li>
+                        </ul>
+                    </div>
+                    <div class="user-fav">
+                        <p>Others</p>
+                        <ul>
+                            <li class="{% if active_tab == 'change_password' %}active{% endif %}"><a href="{% url 'user_profile_password' %}">Change password</a></li>
+                            <li><a href="#">Log out</a></li>
+                        </ul>
+                    </div>
+                </div>
