@@ -135,8 +135,8 @@ actors_documents = [
         "country": "United States",
         "height": 183,
         "directory_name": "Leonardo_DiCaprio_123",
-        "short_description": "",
-        "biography": ""
+        "short_description": "Is very cool\n",
+        "biography": "Is very cool biography"
     },
     {
         "full_name": "Morgan Freeman",
@@ -225,8 +225,7 @@ all_filling_data = [genres_documents, movies_documents, relationship_documents, 
 amount_of_fillings = len(all_filling_data)
 if __name__ == '__main__':
     # for creating directories for movies
-    whole_path_directory_of_movies = "C:\\KPI(programming)\\6semester\\PythonWeb" \
-                                     "\\Lab1\\tortillasite\\main\\static\\main\\images\\movies\\"
+    whole_path_directory_of_movies = "/tortillasite/main/static/main/images/movies\\"
     # print(os.makedirs(
     #     whole_path_directory_of_movies, exist_ok=True))
     # print(os.path.exists(

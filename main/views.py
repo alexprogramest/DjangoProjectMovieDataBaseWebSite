@@ -11,4 +11,8 @@ def index(request):
     #     print(one_movie.genres.all())
     five_celebrities = Actor.objects.all()[:5]
     # print(five_actors)
-    return render(request, 'main/index.html', {"all_movies": all_movies, "selected_celebrities": five_celebrities})
+    current_user_username = request.session.get("current_user_username")
+    current_user_directory_name = request.session.get("current_user_username")
+    return render(request, 'main/index.html', {"all_movies": all_movies, "selected_celebrities": five_celebrities,
+                                               "current_user_username": current_user_username,
+                                               "current_user_directory_name": current_user_directory_name})

@@ -39,15 +39,3 @@ class TheMovie(models.Model):
 
     def __str__(self):
         return self.title
-
-# class MovieDBUser(models.Model):
-#     # the_id = models.AutoField(primary_key=True)
-#     nick_name = models.CharField(max_length=50)
-#     password = models.CharField(max_length=30)
-#     email_address = models.EmailField(max_length=30)
-#     first_name = models.CharField(max_length=20)
-#     last_name = models.CharField(max_length=20)
-#     country = models.CharField(max_length=20)
-#     state = models.CharField(max_length=20)
-#     avatar_picture_file = models.CharField(max_length=50)
-#     favourite_movies = models.ManyToManyField(TheMovie)

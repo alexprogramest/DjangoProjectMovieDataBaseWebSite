@@ -10,7 +10,7 @@
 				<div class="hero-ct">
 					<h1> movie listing - list</h1>
 					<ul class="breadcumb">
-						<li class="active"><a href="{% url 'home' %}">Home</a></li>
+						<li class="active"><a href="{% url 'main_app:home' %}">Home</a></li>
 						<li> <span class="ion-ios-arrow-right"></span> movie listing</li>
 					</ul>
 				</div>
@@ -37,61 +37,21 @@
 					<a href="{% url 'movies_list' %}" class="list"><i class="ion-ios-list-outline active"></i></a>
 					<a  href="{% url 'movies' %}" class="grid"><i class="ion-grid"></i></a>
 				</div>
+                {% for one_selected_movie in defined_movies %}
 				<div class="movie-item-style-2">
-					<img src="images/uploads/mv1.jpg" alt="">
+                    {% with image_directory_name=one_selected_movie.directory_name selected_movie_id=one_selected_movie.id %}
+					<img src="{% static 'main/images/movies/'|add:image_directory_name|add:'/main_picture.jpg' %}" alt="">
 					<div class="mv-item-infor">
-						<h6><a href="{% url 'movie_single' %}">oblivion <span>(2012)</span></a></h6>
-						<p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
+						<h6><a href="{% url 'movie_single' selected_movie_id %}">{{ one_selected_movie.title }} <span>({{ one_selected_movie.release_date.year }})</span></a></h6>
+						<p class="rate"><i class="ion-android-star"></i><span>{{ one_selected_movie.movie_score }}</span> /10</p>
 						<p class="describe">Earth's mightiest heroes must come together and learn to fight as a team if they are to stop the mischievous Loki and his alien army from enslaving humanity...</p>
-						<p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-						<p>Director: <a href="#">Joss Whedon</a></p>
+						<p class="run-time"> Run Time: {{ one_selected_movie.duration }}    .     <span>MMPA: {{ one_selected_movie.MPAA_rating }} </span>    .     <span>Release: {{ one_selected_movie.release_date }}</span></p>
+						<p>Director: <a href="#">{{ one_selected_movie.director }}</a></p>
 						<p>Stars: <a href="#">Robert Downey Jr.,</a> <a href="#">Chris Evans,</a> <a href="#">  Chris Hemsworth</a></p>
 					</div>
+                    {% endwith %}
 				</div>
-				<div class="movie-item-style-2">
-					<img src="images/uploads/mv2.jpg" alt="">
-					<div class="mv-item-infor">
-						<h6><a href="moviesingle.html">into the wild <span>(2014)</span></a></h6>
-						<p class="rate"><i class="ion-android-star"></i><span>7.8</span> /10</p>
-						<p class="describe">As Steve Rogers struggles to embrace his role in the modern world, he teams up with a fellow Avenger and S.H.I.E.L.D agent, Black Widow, to battle a new threat...</p>
-						<p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-						<p>Director: <a href="#">Anthony Russo,</a><a href="#">Joe Russo</a></p>
-						<p>Stars: <a href="#">Chris Evans,</a> <a href="#">Samuel L. Jackson,</a> <a href="#">  Scarlett Johansson</a></p>
-					</div>
-				</div>
-				<div class="movie-item-style-2">
-					<img src="images/uploads/mv3.jpg" alt="">
-					<div class="mv-item-infor">
-						<h6><a href="moviesingle.html">blade runner  <span>(2015)</span></a></h6>
-						<p class="rate"><i class="ion-android-star"></i><span>7.3</span> /10</p>
-						<p class="describe">Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, cat burglar Scott Lang must embrace his inner hero and help...</p>
-						<p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-						<p>Director: <a href="#">Peyton Reed</a></p>
-						<p>Stars: <a href="#">Paul Rudd,</a> <a href="#"> Michael Douglas</a></p>
-					</div>
-				</div>
-				<div class="movie-item-style-2">
-					<img src="images/uploads/mv4.jpg" alt="">
-					<div class="mv-item-infor">
-						<h6><a href="moviesingle.html">Mulholland pride<span> (2013)  </span></a></h6>
-						<p class="rate"><i class="ion-android-star"></i><span>7.2</span> /10</p>
-						<p class="describe">When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.</p>
-						<p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-						<p>Director: <a href="#">Shane Black</a></p>
-						<p>Stars: <a href="#">Robert Downey Jr., </a> <a href="#">  Guy Pearce,</a><a href="#">Don Cheadle</a></p>
-					</div>
-				</div>
-				<div class="movie-item-style-2">
-					<img src="images/uploads/mv5.jpg" alt="">
-					<div class="mv-item-infor">
-						<h6><a href="moviesingle.html">skyfall: evil of boss<span> (2013)  </span></a></h6>
-						<p class="rate"><i class="ion-android-star"></i><span>7.0</span> /10</p>
-						<p class="describe">When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.</p>
-						<p class="run-time"> Run Time: 2h21’    .     <span>MMPA: PG-13 </span>    .     <span>Release: 1 May 2015</span></p>
-						<p>Director: <a href="#">Alan Taylor</a></p>
-						<p>Stars: <a href="#">Chris Hemsworth,  </a> <a href="#">  Natalie Portman,</a><a href="#">Tom Hiddleston</a></p>
-					</div>
-				</div>
+                {% endfor %}
 				<div class="topbar-filter">
 					<label>Movies per page:</label>
 					<select>
@@ -110,11 +70,11 @@
 				<div class="sidebar">
 					<div class="searh-form">
 						<h4 class="sb-title">Search for movie</h4>
-						<form class="form-style-1" action="#">
+						<form class="form-style-1" action="">
 							<div class="row">
 								<div class="col-md-12 form-it">
 									<label>Movie name</label>
-									<input type="text" placeholder="Enter keywords">
+									<input name="text_for_input" type="text" placeholder="Enter keywords">
 								</div>
 								<div class="col-md-12 form-it">
 									<label>Genres & Subgenres</label>
@@ -122,43 +82,51 @@
 										<select
 											name="skills" multiple="" class="ui fluid dropdown">
 											<option value="">Enter to filter genres</option>
-											<option value="Action1">Action 1</option>
-					                        <option value="Action2">Action 2</option>
-					                        <option value="Action3">Action 3</option>
-					                        <option value="Action4">Action 4</option>
-					                        <option value="Action5">Action 5</option>
+											{% for one_selected_genre in all_genres %}
+											<option value="{{one_selected_genre.whole_name|title}}">{{one_selected_genre.whole_name|title}}</option>
+											{% endfor %}
 										</select>
 									</div>
-
 								</div>
 								<div class="col-md-12 form-it">
 									<label>Rating Range</label>
-
-									 <select>
-										<option value="range">-- Select the rating range below --</option>
-										<option value="saab">-- Select the rating range below --</option>
-										<option value="saab">-- Select the rating range below --</option>
-										<option value="saab">-- Select the rating range below --</option>
+									<select name="rating_range">
+										<option value="">Select the rating range below </option>
+										<option> from 0 to 3  </option>
+										<option> from 3 to 6  </option>
+										<option> from 6 to 9  </option>
+										<option> from 9 to 10  </option>
 									</select>
-
 								</div>
 								<div class="col-md-12 form-it">
 									<label>Release Year</label>
 									<div class="row">
 										<div class="col-md-6">
-											<select>
-												<option value="range">From</option>
-												<option value="number">10</option>
-												<option value="number">20</option>
-												<option value="number">30</option>
+											<select name="release_year_from">
+											  <option value="">From</option>
+											  <option>1940</option>
+											  <option>1950</option>
+											  <option>1960</option>
+											  <option>1970</option>
+											  <option>1980</option>
+											  <option>1990</option>
+											  <option>2000</option>
+											  <option>2010</option>
+											  <option>2020</option>
 											</select>
 										</div>
 										<div class="col-md-6">
-											<select>
-												<option value="range">To</option>
-												<option value="number">20</option>
-												<option value="number">30</option>
-												<option value="number">40</option>
+											<select name="release_year_to">
+											  <option value="">To</option>
+											  <option>1940</option>
+											  <option>1950</option>
+											  <option>1960</option>
+											  <option>1970</option>
+											  <option>1980</option>
+											  <option>1990</option>
+											  <option>2000</option>
+											  <option>2010</option>
+											  <option>2020</option>
 											</select>
 										</div>
 									</div>

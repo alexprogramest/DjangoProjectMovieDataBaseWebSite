@@ -9,7 +9,7 @@
 				<div class="hero-ct">
 					<h1>celebrity listing - list</h1>
 					<ul class="breadcumb">
-						<li class="active"><a href="{% url 'home' %}">Home</a></li>
+						<li class="active"><a href="{% url 'main_app:home' %}">Home</a></li>
 						<li> <span class="ion-ios-arrow-right"></span> celebrity listing</li>
 					</ul>
 				</div>
@@ -23,7 +23,7 @@
 		<div class="row ipad-width2">
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="topbar-filter">
-					<p class="pad-change">Found <span>1,608 celebrities</span> in total</p>
+					<p class="pad-change">Found <span>{{ defined_celebrities|length }} celebrities</span> in total</p>
 					<label>Sort by:</label>
 					<select>
 						<option value="popularity">Popularity Descending</option>
@@ -37,86 +37,20 @@
 					<a  href="{% url 'celebrities' %}" class="grid"><i class="ion-grid "></i></a>
 				</div>
 				<div class="row">
+					{% for one_selected_celebrity in defined_celebrities %}
 					<div class="col-md-12">
 						<div class="ceb-item-style-2">
-							<img src="images/uploads/ceblist1.jpg" alt="">
+							{% with image_directory_name=one_selected_celebrity.directory_name one_selected_celebrity_id=one_selected_celebrity.id %}
+							<img style="width:103px;height:142.5px" src="{% static 'main/images/celebrities/'|add:image_directory_name|add:'/main_picture.jpg' %}" alt="">
 							<div class="ceb-infor">
-								<h2><a href="{% url 'celebrities_single' %}">Dan Stevens</a></h2>
-								<span>actor, usa</span>
-								<p>Dan Stevens was born at Croydon in Surrey on 10th October 1982. His parents are teachers. He was educated at Tonbridge School and trained in acting at the National Youth Theatre of Great Britain... </p>
+								<h2><a href="{% url 'celebrities_single' one_selected_celebrity_id %}">{{ one_selected_celebrity.full_name }}</a></h2>
+								<span>actor, {{ one_selected_celebrity.country }}</span>
+								<p>{{ one_selected_celebrity.short_description }} </p>
 							</div>
+							{% endwith %}
 						</div>
 					</div>
-					<div class="col-md-12">
-						<div class="ceb-item-style-2">
-							<img src="images/uploads/ceblist2.jpg" alt="">
-							<div class="ceb-infor">
-								<h2><a href="celebritysingle.html">Luke Evans</a></h2>
-								<span>actor, mexico</span>
-								<p>Luke George Evans was born in Pontypool, Wales, and grew up in Aberbargoed, in the south of Wales. He is the son of Yvonne (Lewis) and David Evans. He moved to Cardiff at the age 17...</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="ceb-item-style-2">
-							<img src="images/uploads/ceblist3.jpg" alt="">
-							<div class="ceb-infor">
-								<h2><a href="celebritysingle.html">Scarlett Johansson</a></h2>
-								<span>actress, france</span>
-								<p>Scarlett Ingrid Johansson was born in New York City. Her mother, Melanie Sloan, is from a Jewish family from the Bronx, and her father, Karsten Johansson, is a Danish-born architect, from Copenhagen...</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="ceb-item-style-2">
-							<img src="images/uploads/ceblist4.jpg" alt="">
-							<div class="ceb-infor">
-								<h2><a href="celebritysingle.html">Emma Watson</a></h2>
-								<span>actress, uk</span>
-								<p>Emma Charlotte Duerre Watson was born in Paris, France, to English parents, Jacqueline Luesby and Chris Watson, both lawyers. She moved to Oxfordshire when she was five...</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="ceb-item-style-2">
-							<img src="images/uploads/ceblist5.jpg" alt="">
-							<div class="ceb-infor">
-								<h2><a href="celebritysingle.html">Tom Hardy</a></h2>
-								<span>actor, italy	</span>
-								<p>Joan Crawford was born Lucille Fay LeSueur on March 23, 1905, in San Antonio, Texas, to Anna Belle (Johnson) and Thomas E. LeSueur, a laundry laborer. By the time she was born her parents had separated....</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="ceb-item-style-2">
-							<img src="images/uploads/ceblist6.jpg" alt="">
-							<div class="ceb-infor">
-								<h2><a href="celebritysingle.html">Joan Crawford</a></h2>
-								<span>director, sweden</span>
-								<p>Joan Crawford was born Lucille Fay LeSueur on March 23, 1905, in San Antonio, Texas, to Anna Belle (Johnson) and Thomas E. LeSueur, a laundry laborer. By the time she was born her parents had separated....</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="ceb-item-style-2">
-							<img src="images/uploads/ceblist7.jpg" alt="">
-							<div class="ceb-infor">
-								<h2><a href="celebritysingle.html">Margot Robbie</a></h2>
-								<span>actress, chile</span>
-								<p>Margot Robbie is an Australian actress born in Dalby, Queensland, and raised on the Gold Coast, spending much of her time at the farm belonging to her grandparents. Her mother, Sarie Kessler, is a physiotherapist....</p>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div class="ceb-item-style-2">
-							<img src="images/uploads/ceblist8.jpg" alt="">
-							<div class="ceb-infor">
-								<h2><a href="celebritysingle.html">Jason Momoa</a></h2>
-								<span>actor, usa</span>
-								<p>Joseph Jason Namakaeha Momoa was born on August 1, 1979 in Honolulu, Hawaii. He is the son of Coni (Lemke), a photographer, and Joseph Momoa, a painter...</p>
-							</div>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 				<div class="topbar-filter">
 					<label>Reviews per page:</label>
@@ -141,39 +75,58 @@
 				<div class="sidebar">
 						<div class="searh-form">
 						<h4 class="sb-title">Search celebrity</h4>
-						<form class="form-style-1 celebrity-form" action="#">
+						<form class="form-style-1 celebrity-form" action="">
 							<div class="row">
 								<div class="col-md-12 form-it">
 									<label>Celebrity name</label>
-									<input type="text" placeholder="Enter keywords">
+									<input name="text_for_input" type="text" placeholder="Enter keywords">
 								</div>
+<!--								<div class="col-md-12 form-it">-->
+<!--									<label>Celebrity Letter</label>-->
+<!--									<select>-->
+<!--									  <option value="range">A</option>-->
+<!--									  <option value="saab">B</option>-->
+<!--									</select>-->
+<!--								</div>-->
 								<div class="col-md-12 form-it">
-									<label>Celebrity Letter</label>
-									<select>
-									  <option value="range">A</option>
-									  <option value="saab">B</option>
-									</select>
-								</div>
-								<div class="col-md-12 form-it">
-									<label>Category</label>
-									<select>
-									  <option value="range">Actress</option>
-									  <option value="saab">Others</option>
+									<label>Country</label>
+									<select name="country">
+                                        <option value="">Select country</option>
+                                        {% for one_selected_country in defined_countries %}
+									    <option>{{ one_selected_country }}</option>
+										{% endfor %}
 									</select>
 								</div>
 								<div class="col-md-12 form-it">
 									<label>Year of birth</label>
 									<div class="row">
 										<div class="col-md-6">
-											<select>
-											  <option value="range">1970</option>
-											  <option value="number">Other</option>
+											<select name="year_of_birth_from">
+												<option value="">From</option>
+											  	<option>1930</option>
+											  	<option>1940</option>
+											  	<option>1950</option>
+											  	<option>1960</option>
+											  	<option>1970</option>
+											  	<option>1980</option>
+											  	<option>1990</option>
+											  	<option>2000</option>
+											  	<option>2010</option>
+											  	<option>2020</option>
 											</select>
 										</div>
 										<div class="col-md-6">
-											<select>
-											  <option value="range">1990</option>
-											  <option value="number">others</option>
+											<select name="year_of_birth_to">
+												<option value="">To</option>
+											  	<option>1940</option>
+											  	<option>1950</option>
+											  	<option>1960</option>
+											  	<option>1970</option>
+											  	<option>1980</option>
+											  	<option>1990</option>
+											  	<option>2000</option>
+											  	<option>2010</option>
+											  	<option>2020</option>
 											</select>
 										</div>
 									</div>

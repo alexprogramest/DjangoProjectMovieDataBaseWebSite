@@ -9,7 +9,7 @@
 				<div class="hero-ct">
 					<h1>celebrity listing - grid</h1>
 					<ul class="breadcumb">
-						<li class="active"><a href="{% url 'home' %}">Home</a></li>
+						<li class="active"><a href="{% url 'main_app:home' %}">Home</a></li>
 						<li> <span class="ion-ios-arrow-right"></span> celebrity listing</li>
 					</ul>
 				</div>
@@ -23,7 +23,7 @@
 		<div class="row ipad-width2">
 			<div class="col-md-9 col-sm-12 col-xs-12">
 				<div class="topbar-filter">
-					<p>Found <span>1,608 celebrities</span> in total</p>
+					<p>Found <span>{{ defined_celebrities|length }} celebrities</span> in total</p>
 					<label>Sort by:</label>
 					<select>
 						<option value="popularity">Popularity Descending</option>
@@ -37,70 +37,17 @@
 					<a  href="{% url 'celebrities' %}" class="grid"><i class="ion-grid active"></i></a>
 				</div>
 				<div class="celebrity-items">
+					{% for one_selected_celebrity in defined_celebrities %}
 					<div class="ceb-item">
-						<a href="{% url 'celebrities_single' %}"><img src="images/uploads/ceb1.jpg" alt=""></a>
+						{% with image_directory_name=one_selected_celebrity.directory_name one_selected_celebrity_id=one_selected_celebrity.id %}
+						<a href="{% url 'celebrities_single' one_selected_celebrity_id %}"><img style="width:270px;height:400px" src="{% static 'main/images/celebrities/'|add:image_directory_name|add:'/main_picture.jpg' %}" alt=""></a>
 						<div class="ceb-infor">
-							<h2><a href="celebritylist.html">Tom Hardy</a></h2>
-							<span>actor, usa</span>
+							<h2><a href="{% url 'celebrities_single' one_selected_celebrity_id %}">{{ one_selected_celebrity.full_name }}</a></h2>
+							<span>actor, {{ one_selected_celebrity.country }}</span>
 						</div>
+						{% endwith %}
 					</div>
-					<div class="ceb-item">
-						<a href="celebritylist.html"><img src="images/uploads/ceb2.jpg" alt=""></a>
-						<div class="ceb-infor">
-							<h2><a href="celebritylist.html">Leonardo DiCaprio</a></h2>
-							<span>actor, mexico</span>
-						</div>
-					</div>
-					<div class="ceb-item">
-						<a href="celebritysingle.html"><img src="images/uploads/ceb3.jpg" alt=""></a>
-						<div class="ceb-infor">
-							<h2><a href="celebritylist.html">Emma Stone</a></h2>
-							<span>Actress, usa</span>
-						</div>
-					</div>
-					<div class="ceb-item">
-						<a href="celebritysingle.html"> <img src="images/uploads/ceb4.jpg" alt=""></a>
-
-						<div class="ceb-infor">
-							<h2><a href="celebritylist.html">Olga Kurylenko</a></h2>
-							<span>Actress, sweden</span>
-						</div>
-					</div>
-					<div class="ceb-item">
-						<a href="celebritysingle.html"><img src="images/uploads/ceb5.jpg" alt=""></a>
-						<div class="ceb-infor">
-							<h2><a href="celebritylist.html">Micheal Bay</a></h2>
-							<span>Director, france</span>
-						</div>
-					</div>
-					<div class="ceb-item">
-						<a href="celebritysingle.html"><img src="images/uploads/ceb6.jpg" alt=""></a>
-						<div class="ceb-infor">
-							<h2><a href="celebritylist.html">Martin Scorsese</a></h2>
-							<span>Director, italy</span>
-						</div>
-					</div>
-					<div class="ceb-item">
-						<a href="celebritysingle.html"><img src="images/uploads/ceb7.jpg" alt=""></a>
-						<div class="ceb-infor">
-							<h2><a href="celebritylist.html">TJohnson Staham</a></h2>
-							<span>actor, uk</span>
-						</div>
-					</div>
-					<div class="ceb-item">
-						<a href="celebritysingle.html"><img src="images/uploads/ceb8.jpg" alt=""></a>
-						<div class="ceb-infor">
-							<h2><a href="celebritylist.html">Haley Bennett</a></h2>
-							<span>actress, france</span>
-						</div>
-					</div>
-					<div class="ceb-item">
-						<a href="celebritysingle.html"><img src="images/uploads/ceb9.jpg" alt=""></a>
-						<div class="ceb-infor">
-							<h2><a href="celebritylist.html">Teresa Palmer</a></h2>
-							<span>actress, uk</span>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 				<div class="topbar-filter">
 					<label>Reviews per page:</label>
@@ -125,39 +72,58 @@
 				<div class="sidebar">
 						<div class="searh-form">
 						<h4 class="sb-title">Search celebrity</h4>
-						<form class="form-style-1 celebrity-form" action="#">
+						<form class="form-style-1 celebrity-form" action="">
 							<div class="row">
 								<div class="col-md-12 form-it">
 									<label>Celebrity name</label>
-									<input type="text" placeholder="Enter keywords">
+									<input name="text_for_input" type="text" placeholder="Enter keywords">
 								</div>
+<!--								<div class="col-md-12 form-it">-->
+<!--									<label>Celebrity Letter</label>-->
+<!--									<select>-->
+<!--									  <option value="range">A</option>-->
+<!--									  <option value="saab">B</option>-->
+<!--									</select>-->
+<!--								</div>-->
 								<div class="col-md-12 form-it">
-									<label>Celebrity Letter</label>
-									<select>
-									  <option value="range">A</option>
-									  <option value="saab">B</option>
-									</select>
-								</div>
-								<div class="col-md-12 form-it">
-									<label>Category</label>
-									<select>
-									  <option value="range">Actress</option>
-									  <option value="saab">Others</option>
+									<label>Country</label>
+									<select name="country">
+                                        <option value="">Select country</option>
+                                        {% for one_selected_country in defined_countries %}
+									    <option>{{ one_selected_country }}</option>
+										{% endfor %}
 									</select>
 								</div>
 								<div class="col-md-12 form-it">
 									<label>Year of birth</label>
 									<div class="row">
 										<div class="col-md-6">
-											<select>
-											  <option value="range">1970</option>
-											  <option value="number">Other</option>
+											<select name="year_of_birth_from">
+												<option value="">From</option>
+											  	<option>1930</option>
+											  	<option>1940</option>
+											  	<option>1950</option>
+											  	<option>1960</option>
+											  	<option>1970</option>
+											  	<option>1980</option>
+											  	<option>1990</option>
+											  	<option>2000</option>
+											  	<option>2010</option>
+											  	<option>2020</option>
 											</select>
 										</div>
 										<div class="col-md-6">
-											<select>
-											  <option value="range">1990</option>
-											  <option value="number">others</option>
+											<select name="year_of_birth_to">
+												<option value="">To</option>
+											  	<option>1940</option>
+											  	<option>1950</option>
+											  	<option>1960</option>
+											  	<option>1970</option>
+											  	<option>1980</option>
+											  	<option>1990</option>
+											  	<option>2000</option>
+											  	<option>2010</option>
+											  	<option>2020</option>
 											</select>
 										</div>
 									</div>
