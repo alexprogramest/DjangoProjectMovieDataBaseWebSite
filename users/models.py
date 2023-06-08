@@ -1,4 +1,6 @@
 from django.db import models
+from movies.models import TheMovie
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 # Create your models here.
@@ -11,7 +13,20 @@ class MovieDBUser(models.Model):
     country = models.CharField(max_length=20)
     state = models.CharField(max_length=20)
     directory_name = models.CharField(max_length=20)
-    # favourite_movies = models.ManyToManyField(TheMovie)
+    avatar_icon_changed = models.BooleanField()
+    favourite_movies = models.ManyToManyField(TheMovie)
 
     def __str__(self):
         return self.nick_name
+
+
+class MovieReview(models.Model):
+    title = models.CharField(max_length=50)
+    main_text = models.CharField(max_length=10000)
+    movie_rating = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
+    the_movie = models.ForeignKey(TheMovie, on_delete=models.PROTECT)
+    the_user = models.ForeignKey(MovieDBUser, on_delete=models.PROTECT)
+    is_created_at = models.DateField()
+
+    def __str__(self):
+        return self.title

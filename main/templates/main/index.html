@@ -159,7 +159,7 @@
                                                 {% endwith %}
                                             </div>
                                             <div class="hvr-inner">
-                                                <a href="moviesingle.html"> Read more <i
+                                                <a href="{% url 'movie_single' one_movie.id %}"> Read more <i
                                                         class="ion-android-arrow-dropright"></i> </a>
                                             </div>
                                             <div class="title-in">
@@ -527,7 +527,7 @@
                                                 {% endwith %}
                                             </div>
                                             <div class="hvr-inner">
-                                                <a href="moviesingle.html"> Read more <i
+                                                <a href="{% url 'movie_single' one_movie.id %}"> Read more <i
                                                         class="ion-android-arrow-dropright"></i> </a>
                                             </div>
                                             <div class="title-in">
@@ -783,27 +783,6 @@
                             </div>
                         </div>
                         {% endfor %}
-                        <div class="celeb-item">
-                            <a href="#"><img src="images/uploads/ava2.jpg" alt="" width="70" height="70"></a>
-                            <div class="celeb-author">
-                                <h6><a href="#">Benjamin Carroll</a></h6>
-                                <span>Actor</span>
-                            </div>
-                        </div>
-                        <div class="celeb-item">
-                            <a href="#"><img src="images/uploads/ava3.jpg" alt="" width="70" height="70"></a>
-                            <div class="celeb-author">
-                                <h6><a href="#">Beverly Griffin</a></h6>
-                                <span>Actor</span>
-                            </div>
-                        </div>
-                        <div class="celeb-item">
-                            <a href="#"><img src="images/uploads/ava4.jpg" alt="" width="70" height="70"></a>
-                            <div class="celeb-author">
-                                <h6><a href="#">Justin Weaver</a></h6>
-                                <span>Actor</span>
-                            </div>
-                        </div>
                         <a href="{% url 'celebrities' %}" class="btn">See all celebrities<i class="ion-ios-arrow-right"></i></a>
                     </div>
                 </div>

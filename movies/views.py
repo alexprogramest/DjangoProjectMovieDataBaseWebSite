@@ -1,5 +1,9 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect
 from .models import MovieGenre, TheMovie
+from users.models import MovieDBUser
+from users.models import MovieReview
 
 
 def get_appropriate_movies(arg_request):
@@ -60,27 +64,54 @@ def movies_list(request):
 
 def movie_single(request, movie_id):
     selected_movie = TheMovie.objects.get(pk=movie_id)
+    selected_reviews = MovieReview.objects.all().filter(the_movie=selected_movie)
+
     all_stars = []
     for one_star_number in range(10):
         all_stars.append("ion-ios-star")
         if one_star_number + 1 > int(selected_movie.movie_score):
-            print(int(selected_movie.movie_score))
+            # print(int(selected_movie.movie_score))
             all_stars[-1] += "-outline"
     selected_movie_genres = []
     for one_selected_genre in selected_movie.genres.all():
         selected_movie_genres.append({"id": one_selected_genre.id, "whole_name": one_selected_genre.whole_name.title()})
-    return render(request, 'movies/movie_single.html', {"selected_movie": selected_movie, "all_stars": all_stars,
-                                                        "selected_movie_genres": selected_movie_genres})
+    whole_important_info = {"selected_movie": selected_movie, "all_stars": all_stars,
+                            "selected_movie_genres": selected_movie_genres,
+                            "selected_movie_reviews": reversed(selected_reviews)}
+
+    current_user_nick_name = request.session.get("current_user_username")
+    if current_user_nick_name:
+        whole_important_info["current_user"] = MovieDBUser.objects.get(nick_name=current_user_nick_name)
+        # whole_important_info["current_movie_is_favourite"] = selected_movie in whole_important_info[
+        #     "current_user"].favourite_movies.all()
+        # print(whole_important_info["current_user"].favourite_movies.all())
+        # print(selected_movie)
+        # print(whole_important_info["current_movie_is_favourite"])
+        # print(selected_movie in MovieDBUser.objects.get(nick_name=current_user_nick_name).favourite_movies.all)
+    # current_user_directory_name = request.session.get("current_user_directory_name")
+
+    return render(request, 'movies/movie_single.html', whole_important_info)
 
 
-def add_comment(request, movie_id):
+def add_review(request, movie_id):
     if request.method == 'POST':
+        print(request.POST)
         selected_movie = TheMovie.objects.get(pk=movie_id)
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        website = request.POST.get('website')
-        message = request.POST.get('message')
+        current_user = MovieDBUser.objects.get(nick_name=request.session.get("current_user_username"))
+        review_title = request.POST.get('review_title')
+        review_movie_rating = request.POST.get('review_movie_rating')
+        review_main_text = request.POST.get('review_main_text')
 
+        new_review = MovieReview()
+        new_review.title = review_title
+        new_review.main_text = review_main_text
+        new_review.movie_rating = review_movie_rating
+        new_review.the_movie = selected_movie
+        new_review.the_user = current_user
+        new_review.is_created_at = datetime.now()
+        new_review.save()
+
+        # print(selected_movie, current_user, review_title, review_main_text, review_movie_rating)
         # comment = Comment(name=name, email=email, website=website, message=message, movie=selected_movie)
         # comment.save()
 

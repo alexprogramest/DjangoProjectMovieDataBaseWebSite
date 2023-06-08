@@ -480,7 +480,7 @@ $(function(){
 				setTimeout( function(){
 					$(target).removeClass("openform");
 				}, 350);
-			}	
+			}
 		});
     });
     // close popup for mobile
